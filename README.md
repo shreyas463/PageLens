@@ -7,15 +7,18 @@ Technical and SEO details at a glance - an interactive web application that help
 - **Meta Tag Analysis**: Extracts and displays all important SEO-related meta tags from any website
 - **SEO Score**: Calculates an overall SEO score based on meta tag implementation
 - **Visual Previews**: Shows how your site will appear in Google search results and social media shares
+- **Interactive Data Visualizations**: Displays SEO analysis with beautiful charts and graphs
+- **Structured Data Analysis**: Detects and visualizes JSON-LD structured data on your website
 - **Detailed Recommendations**: Provides actionable insights to improve your SEO
-- **Responsive Design**: Works on desktop and mobile devices
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
 ## Preview Tabs
 
-1. **Overview**: See your SEO score, issues, recommendations, and passes at a glance
+1. **Overview**: See your SEO score, issues, recommendations, and passes at a glance with interactive charts
 2. **Google Preview**: Visualize how your site appears in Google search results
 3. **Social Media Preview**: See Facebook/Open Graph and Twitter Card previews
-4. **All Meta Tags**: View all extracted meta tags in detail
+4. **Structured Data**: Analyze JSON-LD structured data with visual breakdown of schema types
+5. **All Meta Tags**: View all extracted meta tags in detail
 
 ## SEO Tags Analyzed
 
@@ -28,6 +31,7 @@ Technical and SEO details at a glance - an interactive web application that help
 - Twitter Card tags
 - Favicon
 - H1 tags
+- Structured data (JSON-LD)
 
 ## Getting Started
 
@@ -57,9 +61,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to use the
 - Next.js (React framework)
 - TypeScript
 - Tailwind CSS (for styling)
+- Recharts (for interactive data visualizations)
 - Axios (for HTTP requests)
 - Cheerio (for HTML parsing)
 
 ## Deployment
 
-This application can be easily deployed to Vercel or any other hosting platform that supports Next.js applications.
+This application is deployed on Netlify and can also be deployed to Vercel or any other hosting platform that supports Next.js applications.
