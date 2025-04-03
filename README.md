@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SEO Tag Analyzer
+
+An interactive web application that helps you analyze and optimize your website's SEO meta tags. This tool fetches the HTML of any website and provides detailed feedback on SEO tags according to best practices.
+
+## Features
+
+- **Meta Tag Analysis**: Extracts and displays all important SEO-related meta tags from any website
+- **SEO Score**: Calculates an overall SEO score based on meta tag implementation
+- **Visual Previews**: Shows how your site will appear in Google search results and social media shares
+- **Detailed Recommendations**: Provides actionable insights to improve your SEO
+- **Responsive Design**: Works on desktop and mobile devices
+
+## Preview Tabs
+
+1. **Overview**: See your SEO score, issues, recommendations, and passes at a glance
+2. **Google Preview**: Visualize how your site appears in Google search results
+3. **Social Media Preview**: See Facebook/Open Graph and Twitter Card previews
+4. **All Meta Tags**: View all extracted meta tags in detail
+
+## SEO Tags Analyzed
+
+- Title tag
+- Meta description
+- Canonical URL
+- Robots meta tag
+- Viewport meta tag
+- Open Graph tags (for Facebook/social media)
+- Twitter Card tags
+- Favicon
+- H1 tags
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to use the SEO Tag Analyzer.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Use
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Enter a website URL in the input field (with or without http/https)
+2. Click "Analyze SEO Tags"
+3. View the analysis results across the different tabs
+4. Implement the recommendations on your website to improve SEO
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js (React framework)
+- TypeScript
+- Tailwind CSS (for styling)
+- Axios (for HTTP requests)
+- Cheerio (for HTML parsing)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This application can be easily deployed to Vercel or any other hosting platform that supports Next.js applications.
