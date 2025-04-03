@@ -38,6 +38,21 @@ export async function POST(request: NextRequest) {
     // Viewport
     metaTags.viewport = $('meta[name="viewport"]').attr('content') || '';
     
+    // Structured Data
+    const structuredData: any[] = [];
+    $('script[type="application/ld+json"]').each((i, el) => {
+      try {
+        const jsonContent = $(el).html();
+        if (jsonContent) {
+          const parsed = JSON.parse(jsonContent);
+          structuredData.push(parsed);
+        }
+      } catch (e) {
+        // Skip invalid JSON
+      }
+    });
+    metaTags.structuredData = structuredData;
+    
     // Open Graph tags
     metaTags.og = {
       title: $('meta[property="og:title"]').attr('content') || '',
@@ -271,6 +286,23 @@ function analyzeSEO(metaTags: Record<string, any>) {
   } else {
     analysis.issues.push('Missing favicon (affects brand recognition and professionalism)');
     analysis.recommendations.push('Add a favicon for better brand recognition and user experience');
+  }
+  
+  // Check for structured data
+  if (metaTags.structuredData && metaTags.structuredData.length > 0) {
+    points += pointsPerCheck;
+    analysis.passes.push(`Found ${metaTags.structuredData.length} structured data items (Schema.org)`); 
+    
+    // Check for specific schema types
+    const schemaTypes = metaTags.structuredData.map((item: any) => item['@type'] || 'Unknown').filter(Boolean);
+    if (schemaTypes.length > 0) {
+      analysis.passes.push(`Schema types detected: ${schemaTypes.join(', ')}`); 
+    } else {
+      analysis.recommendations.push('Consider adding more specific schema types to your structured data');
+    }
+  } else {
+    analysis.issues.push('No structured data (Schema.org) found');
+    analysis.recommendations.push('Add structured data using JSON-LD format to improve rich snippets in search results');
   }
   
   // Check H1 tags - more detailed analysis
