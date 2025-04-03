@@ -8,6 +8,12 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Disable strict mode for React
+  reactStrictMode: false,
+  // Disable image optimization for now
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
