@@ -1,6 +1,6 @@
-# SEO Tag Analyzer
+# PageLens: SEO Tag Analyzer
 
-An interactive web application that helps you analyze and optimize your website's SEO meta tags. This tool fetches the HTML of any website and provides detailed feedback on SEO tags according to best practices.
+Technical and SEO details at a glance - an interactive web application that helps you analyze and optimize your website's SEO meta tags. This tool fetches the HTML of any website and provides detailed feedback on SEO tags according to best practices.
 
 ## Features
 
