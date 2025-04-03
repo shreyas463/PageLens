@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadialBarChart, RadialBar, Legend } from 'recharts';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadialBarChart, RadialBar } from 'recharts';
 
 type MetaTags = {
   title: string;
@@ -80,8 +80,8 @@ export default function Home() {
 
       const data = await response.json();
       setResult(data);
-    } catch (err: any) {
-      setError(err.message || 'An error occurred while analyzing the website');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred while analyzing the website');
     } finally {
       setLoading(false);
     }
@@ -109,7 +109,7 @@ export default function Home() {
         {!result && (
           <div className="max-w-3xl mx-auto text-center mb-10">
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-              Analyze any website's SEO meta tags and get detailed recommendations to improve search engine visibility.
+              Analyze any website&apos;s SEO meta tags and get detailed recommendations to improve search engine visibility.
             </p>
           </div>
         )}
@@ -451,10 +451,7 @@ export default function Home() {
                           </svg>
                           No structured data found
                         </p>
-                        <p className="mt-2 text-gray-600 dark:text-gray-400">
-                          Adding structured data (Schema.org) can help search engines understand your content better
-                          and may enable rich results in search engine results pages.
-                        </p>
+                        <p className="text-gray-600 dark:text-gray-300 mb-6">The website doesn't have any structured data implemented. Adding structured data can help search engines better understand your content and may enable rich results in search listings.</p>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
