@@ -40,13 +40,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Fetch the HTML content of the provided URL
-    const response = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; SEOAnalyzerBot/1.0)',
-      },
-    });
+    const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; SEOAnalyzerBot/1.0)' } }) as Response;
 
-    const html = response.data;
+    const html = await response.text();
     const $ = cheerio.load(html);
     
     // Extract meta tags
@@ -101,7 +97,7 @@ export async function POST(request: NextRequest) {
           const parsed = JSON.parse(jsonContent);
           structuredData.push(parsed);
         }
-      } catch (_) {
+      } catch {
         // Skip invalid JSON
       }
     });
@@ -348,7 +344,7 @@ function analyzeSEO(metaTags: MetaTags) {
     analysis.passes.push(`Found ${metaTags.structuredData.length} structured data items (Schema.org)`); 
     
     // Check for specific schema types
-    const schemaTypes = metaTags.structuredData.map((item: any) => item['@type'] || 'Unknown').filter(Boolean);
+    const schemaTypes = metaTags.structuredData.map((item: Record<string, unknown>) => (item['@type'] as string) || 'Unknown').filter(Boolean);
     if (schemaTypes.length > 0) {
       analysis.passes.push(`Schema types detected: ${schemaTypes.join(', ')}`); 
     } else {
