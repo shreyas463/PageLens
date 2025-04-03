@@ -2,6 +2,35 @@ import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+interface MetaTags {
+  title: string;
+  description: string;
+  canonical: string;
+  robots: string;
+  viewport: string;
+  favicon: string;
+  h1Tags: string[];
+  og: {
+    title: string;
+    description: string;
+    image: string;
+    url: string;
+    type: string;
+    site_name: string;
+    [key: string]: string;
+  };
+  twitter: {
+    card: string;
+    site: string;
+    title: string;
+    description: string;
+    image: string;
+    creator: string;
+    [key: string]: string;
+  };
+  structuredData?: Record<string, unknown>[];
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { url } = await request.json();
@@ -21,7 +50,32 @@ export async function POST(request: NextRequest) {
     const $ = cheerio.load(html);
     
     // Extract meta tags
-    const metaTags: Record<string, any> = {};
+    const metaTags: MetaTags = {
+      title: '',
+      description: '',
+      canonical: '',
+      robots: '',
+      viewport: '',
+      favicon: '',
+      h1Tags: [],
+      og: {
+        title: '',
+        description: '',
+        image: '',
+        url: '',
+        type: '',
+        site_name: ''
+      },
+      twitter: {
+        card: '',
+        site: '',
+        title: '',
+        description: '',
+        image: '',
+        creator: ''
+      },
+      structuredData: []
+    };
     
     // Title
     metaTags.title = $('title').text();
@@ -39,7 +93,7 @@ export async function POST(request: NextRequest) {
     metaTags.viewport = $('meta[name="viewport"]').attr('content') || '';
     
     // Structured Data
-    const structuredData: any[] = [];
+    const structuredData: Record<string, unknown>[] = [];
     $('script[type="application/ld+json"]').each((i, el) => {
       try {
         const jsonContent = $(el).html();
@@ -47,7 +101,7 @@ export async function POST(request: NextRequest) {
           const parsed = JSON.parse(jsonContent);
           structuredData.push(parsed);
         }
-      } catch (e) {
+      } catch (_) {
         // Skip invalid JSON
       }
     });
@@ -92,16 +146,16 @@ export async function POST(request: NextRequest) {
       metaTags,
       seoAnalysis,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error analyzing website:', error);
     return NextResponse.json(
-      { error: `Failed to analyze website: ${error.message}` },
+      { error: `Failed to analyze website: ${error instanceof Error ? error.message : String(error)}` },
       { status: 500 }
     );
   }
 }
 
-function analyzeSEO(metaTags: Record<string, any>) {
+function analyzeSEO(metaTags: MetaTags) {
   const analysis = {
     score: 0,
     maxScore: 100,
@@ -337,8 +391,8 @@ function analyzeSEO(metaTags: Record<string, any>) {
   // Check if title and description are unique and not duplicated
   if (metaTags.title && metaTags.description) {
     // Calculate similarity between title and description
-    const titleWords = new Set(metaTags.title.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3));
-    const descWords = new Set(metaTags.description.toLowerCase().split(/\s+/).filter((w: string) => w.length > 3));
+    const titleWords = new Set((metaTags.title as string).toLowerCase().split(/\s+/).filter((w: string) => w.length > 3));
+    const descWords = new Set((metaTags.description as string).toLowerCase().split(/\s+/).filter((w: string) => w.length > 3));
     
     // Find common words (excluding small words)
     const commonWords = [...titleWords].filter(word => descWords.has(word));
