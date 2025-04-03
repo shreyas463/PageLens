@@ -28,7 +28,7 @@ type MetaTags = {
     image: string;
     creator: string;
   };
-  structuredData?: any[];
+  structuredData?: Record<string, unknown>[];
 };
 
 type SeoAnalysis = {
@@ -200,7 +200,7 @@ export default function Home() {
               {activeTab === 'overview' && (
                 <div>
                   <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-                    <h2 className="text-xl font-bold mb-4 md:mb-0">SEO Score: {result.seoAnalysis.score}/{result.seoAnalysis.maxScore}</h2>
+                    <h2 className="text-xl font-bold mb-4">SEO Score: {result.seoAnalysis.score}/{result.seoAnalysis.maxScore}</h2>
                     
                     <div className="w-full md:w-64 h-32 md:h-32">
                       <ResponsiveContainer width="100%" height="100%">
@@ -431,7 +431,7 @@ export default function Home() {
                               <div key={index} className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 shadow-sm">
                                 <h4 className="font-medium mb-2 flex items-center">
                                   <span className="inline-block w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
-                                  Schema Type: {item['@type'] || 'Unknown'}
+                                  Schema Type: {(item['@type'] as string) || 'Unknown'}
                                 </h4>
                                 <pre className="text-xs overflow-x-auto p-2 bg-gray-100 dark:bg-gray-800 rounded">
                                   {JSON.stringify(item, null, 2)}
